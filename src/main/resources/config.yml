@@ -1,0 +1,30 @@
+# Приветственное сообщение для нового игрока
+welcome-message-new:
+  - "<gray><strikethrough>---<reset> <green>Добро пожаловать <gold>{PLAYER}<green>! <gray><strikethrough>---</gray>"
+  - "<yellow>Ты зашёл на <bold>{SERVER}</bold> впервые!"
+  - "<white>Твой префикс: <gradient:#ff0000:#ffff00>%vault_prefix%</gradient>"
+  - "<white>Ты в мире: <aqua>%world_name%</aqua>"
+  - "<click:open_url:{DISCORD_URL}><rainbow>Присоединяйся к нашему Discord!</rainbow></click>"
+  - "<click:open_url:{TELEGRAM_URL}><gold>Или в Telegram!</gold></click>"
+
+# Приветственное сообщение для существующего игрока
+welcome-message-existing:
+  - "<gray><strikethrough>---<reset> <green>С возвращением <gold>{PLAYER}<green>! <gray><strikethrough>---</gray>"
+  - "<yellow>Снова на <bold>{SERVER}</bold>!"
+  - "<white>Твой уровень: <dark_green>%player_level%</dark_green>"
+  - "<white>Пинг: <blue>{tab_player_ping}ms</blue>, Группа: <dark_aqua>{tab_player_group}</dark_aqua>"
+  - "<click:open_url:{DISCORD_URL}><rainbow>Наш Discord!</rainbow></click>"
+  - "<click:open_url:{TELEGRAM_URL}><gold>Наш Telegram!</gold></click>"
+
+# URL-адреса для ссылок
+discord-url: "https://discord.gg/your_invite_code"
+telegram-url: "https://t.me/your_channel_or_group"
+
+# Задержка между строками анимации (в тиках, 20 тиков = 1 секунда)
+animation-delay-ticks: 5
+
+# Использовать анимацию?
+use-animation: true
+
+# Отправлять сообщение только игроку или всем на сервере?
+broadcast-to-server: false
