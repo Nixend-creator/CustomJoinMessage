@@ -1,0 +1,43 @@
+# ========================================
+# CustomJoinMessage - Конфигурация v1.2.0
+# ========================================
+
+# --- Основные настройки ---
+server-name: "NexusCraft"
+discord-url: "https://discord.gg/example"
+telegram-url: "https://t.me/example"
+use-animation: true
+animation-delay-ticks: 5
+broadcast-to-server: false
+
+# --- Персональные сообщения игроку (при входе/выходе) ---
+welcome-message-new:
+  - "<gradient:#00FFAA:#00AA55>Добро пожаловать на <gold>{server}</gold>, <bold><yellow>{player}</yellow></bold>!</gradient>"
+  - "<gray>Изучи правила и присоединяйся к нам:</gray>"
+  - "<gold><click:open_url:'{discord_url}'><hover:show_text:'<gold>Нажми для перехода в Discord'><u>Discord сервер</u></hover></click></gold> | <aqua><click:open_url:'{telegram_url}'><hover:show_text:'<aqua>Нажми для перехода в Telegram'><u>Telegram канал</u></hover></click></aqua>"
+
+welcome-message-existing:
+  - "<gradient:#55AAFF:#0055FF>С возвращением, <bold><aqua>{player}</aqua></bold>!</gradient>"
+  - "<gray>Сейчас онлайн: <gold>{online}/{max}</gold> игроков на <gold>{server}</gold></gray>"
+
+quit-message:
+  - "<gray><italic>{player}</italic> покинул <gold>{server}</gold></gray>"
+
+# --- Служебные сообщения в ЧАТ (только для админов/OP) ---
+# Включение/отключение каждого типа сообщения
+EnableFirstJoinMessage: true
+EnableJoinMessage: true
+EnableLeaveMessage: true
+
+# Формат сообщений (поддерживаются &-коды и MiniMessage)
+# %player% — имя игрока (также работают {player}, %displayname%)
+FirstJoinMessage: '&a&l%player%&r &7впервые зашёл на сервер! &e✨'
+JoinMessage: '&a+ &f%player%&r &7зашёл на сервер.'
+LeaveMessage: '&c- &f%player%&r &7вышел с сервера.'
+
+# Показывать сообщения только OP (true) или также игрокам с пермишеном (см. ниже)
+admin-only-mode: true
+
+# Пермишен для просмотра сообщений (если admin-only-mode: false)
+# Пример: customjoinmessage.see — игроки с этим пермишеном увидят сообщения
+admin-permission: "customjoinmessage.see"
