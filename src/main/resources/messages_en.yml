@@ -1,0 +1,29 @@
+# Language file: English
+# Version: 1.3.0
+
+# Plugin load/unload
+plugin-enabled: "✅ CustomJoinMessage v{version} loaded!"
+plugin-disabled: "CustomJoinMessage disabled."
+paper-required-title: "========================================"
+paper-required-line1: "CustomJoinMessage requires Paper 1.21+ server"
+paper-required-line2: "Spigot/Vanilla are not supported due to MiniMessage API dependency"
+paper-required-line3: "Download Paper: https://papermc.io"
+paper-required-footer: "========================================"
+
+# Plugin integration
+papi-enabled: "✓ PlaceholderAPI integration active"
+papi-disabled: "⚠️  PlaceholderAPI not found. Placeholders {placeholder_x} will not work."
+
+# Commands
+no-permission: "§cYou don't have permission to execute this command."
+config-reloaded: "§aCustomJoinMessage configuration reloaded!"
+command-usage: "§6/cjm reload §7- reload configuration"
+
+# Errors
+minimessage-error-line: "MiniMessage syntax error in line: {line}"
+minimessage-error-quit: "MiniMessage syntax error in quit message"
+language-load-failed: "Failed to load language file: {lang}. Using Russian as fallback."
+language-not-found: "Language '{lang}' not supported. Available: ru, en"
+
+# System messages
+author-line: "   Author: Nixend | GitHub: https://github.com/Nixend-creator/CustomJoinMessage"

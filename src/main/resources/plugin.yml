@@ -3,15 +3,15 @@ version: '${project.version}-b${build.timestamp}'
 main: dev.nixend.customjoinmessage.CustomJoinMessagePlugin
 api-version: '1.21'
 author: Nixend
-description: Кастомные сообщения при входе/выходе игроков с поддержкой плейсхолдеров и анимаций
+description: Custom join/quit messages with animations and admin notifications
 website: https://github.com/Nixend-creator/CustomJoinMessage
 softdepend: [PlaceholderAPI]
 commands:
   cjm:
-    description: Управление плагином CustomJoinMessage
+    description: Manage CustomJoinMessage plugin
     usage: /<command> reload
     permission: customjoinmessage.reload
 permissions:
   customjoinmessage.reload:
-    description: Перезагрузка конфигурации
+    description: Reload plugin configuration
     default: op

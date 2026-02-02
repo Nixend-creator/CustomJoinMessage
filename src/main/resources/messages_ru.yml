@@ -1,0 +1,29 @@
+# Языковой файл: Русский
+# Версия: 1.3.0
+
+# Загрузка/выгрузка плагина
+plugin-enabled: "✅ CustomJoinMessage v{version} загружен!"
+plugin-disabled: "CustomJoinMessage выключен."
+paper-required-title: "========================================"
+paper-required-line1: "CustomJoinMessage требует сервер Paper 1.21+"
+paper-required-line2: "Spigot/Vanilla не поддерживаются из-за MiniMessage API"
+paper-required-line3: "Скачайте Paper: https://papermc.io"
+paper-required-footer: "========================================"
+
+# Интеграция с плагинами
+papi-enabled: "✓ PlaceholderAPI интеграция активна"
+papi-disabled: "⚠️  PlaceholderAPI не найден. Плейсхолдеры {placeholder_x} работать не будут."
+
+# Команды
+no-permission: "§cУ вас нет прав для выполнения этой команды."
+config-reloaded: "§aКонфигурация CustomJoinMessage перезагружена!"
+command-usage: "§6/cjm reload §7- перезагрузить конфигурацию"
+
+# Ошибки
+minimessage-error-line: "Ошибка синтаксиса MiniMessage в строке: {line}"
+minimessage-error-quit: "Ошибка синтаксиса MiniMessage в quit-сообщении"
+language-load-failed: "Не удалось загрузить языковой файл: {lang}. Используется русский по умолчанию."
+language-not-found: "Язык '{lang}' не поддерживается. Доступные: ru, en"
+
+# Системные сообщения
+author-line: "   Автор: Nixend | GitHub: https://github.com/Nixend-creator/CustomJoinMessage"

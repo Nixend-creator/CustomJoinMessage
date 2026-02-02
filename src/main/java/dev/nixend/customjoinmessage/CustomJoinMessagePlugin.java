@@ -2,23 +2,35 @@ package dev.nixend.customjoinmessage;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CustomJoinMessagePlugin extends JavaPlugin {
 
     private boolean placeholderAPIEnabled = false;
-    private JoinMessageListener joinListener;
+    private LanguageManager languageManager;
 
     @Override
     public void onEnable() {
-        // Проверка окружения
+        // Инициализация менеджера языков
+        languageManager = new LanguageManager(this);
+
+        // Загрузка языка из конфига
+        saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+
+        String lang = getConfig().getString("language", "ru").toLowerCase();
+        if (!languageManager.loadLanguage(lang)) {
+            getLogger().warning(languageManager.getMessage("language-load-failed", "{lang}", lang));
+        }
+
+        // Проверка Paper
         if (!isPaperServer()) {
-            getLogger().severe("========================================");
-            getLogger().severe("CustomJoinMessage требует сервер Paper 1.21+");
-            getLogger().severe("Spigot/Vanilla не поддерживаются из-за MiniMessage API");
-            getLogger().severe("Скачайте Paper: https://papermc.io");
-            getLogger().severe("========================================");
+            getLogger().severe(languageManager.getMessage("paper-required-title"));
+            getLogger().severe(languageManager.getMessage("paper-required-line1"));
+            getLogger().severe(languageManager.getMessage("paper-required-line2"));
+            getLogger().severe(languageManager.getMessage("paper-required-line3"));
+            getLogger().severe(languageManager.getMessage("paper-required-footer"));
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -26,52 +38,51 @@ public final class CustomJoinMessagePlugin extends JavaPlugin {
         // Интеграция с PlaceholderAPI
         placeholderAPIEnabled = getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
         if (placeholderAPIEnabled) {
-            getLogger().info("✓ PlaceholderAPI интеграция активна");
+            getLogger().info(languageManager.getMessage("papi-enabled"));
         } else {
-            getLogger().warning("⚠️  PlaceholderAPI не найден. Плейсхолдеры {placeholder_x} работать не будут.");
+            getLogger().warning(languageManager.getMessage("papi-disabled"));
         }
 
-        // Генерация конфига с дефолтами
-        saveDefaultConfig();
-        getConfig().options().copyDefaults(true);
-        saveConfig();
-
         // Регистрация листенеров
-        joinListener = new JoinMessageListener(this);
-        getServer().getPluginManager().registerEvents(joinListener, this);
-        getServer().getPluginManager().registerEvents(new QuitMessageListener(this), this);
+        getServer().getPluginManager().registerEvents(new JoinMessageListener(this, languageManager), this);
+        getServer().getPluginManager().registerEvents(new QuitMessageListener(this, languageManager), this);
 
         // Регистрация команды
         getCommand("cjm").setExecutor(this);
 
-        getLogger().info("✅ CustomJoinMessage v" + getDescription().getVersion() + " загружен!");
-        getLogger().info("   Автор: Nixend | Версия сборки: " + getDescription().getVersion());
+        getLogger().info(languageManager.getMessage("plugin-enabled", "{version}", getDescription().getVersion()));
+        getLogger().info(languageManager.getMessage("author-line"));
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("CustomJoinMessage выключен.");
+        getLogger().info(languageManager.getMessage("plugin-disabled"));
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("customjoinmessage.reload")) {
-            sender.sendMessage("§cУ вас нет прав для выполнения этой команды.");
+            sender.sendMessage(languageManager.getMessage("no-permission"));
             return true;
         }
 
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
             reloadConfig();
-            sender.sendMessage("§aКонфигурация CustomJoinMessage перезагружена!");
+            languageManager.reload();
+            sender.sendMessage(languageManager.getMessage("config-reloaded"));
             return true;
         }
 
-        sender.sendMessage("§6/cjm reload §7- перезагрузить конфигурацию");
+        sender.sendMessage(languageManager.getMessage("command-usage"));
         return true;
     }
 
     public boolean isPlaceholderAPIEnabled() {
         return placeholderAPIEnabled;
+    }
+
+    public LanguageManager getLanguageManager() {
+        return languageManager;
     }
 
     private boolean isPaperServer() {

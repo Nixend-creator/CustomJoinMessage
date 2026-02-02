@@ -28,10 +28,12 @@ public class JoinMessageListener implements Listener {
             .useUnusualXRepeatedCharacterHexFormat()
             .build();
     private final CustomJoinMessagePlugin plugin;
+    private final LanguageManager languageManager;
     private final Map<UUID, BukkitTask> animationTasks = new HashMap<>();
 
-    public JoinMessageListener(CustomJoinMessagePlugin plugin) {
+    public JoinMessageListener(CustomJoinMessagePlugin plugin, LanguageManager languageManager) {
         this.plugin = plugin;
+        this.languageManager = languageManager;
     }
 
     @EventHandler
@@ -64,10 +66,10 @@ public class JoinMessageListener implements Listener {
 
         // === 2. Служебное сообщение в чат (только для админов) ===
         if (isNewPlayer && plugin.getConfig().getBoolean("EnableFirstJoinMessage", true)) {
-            String messageTemplate = plugin.getConfig().getString("FirstJoinMessage", "&a&l%player%&r &7впервые зашёл на сервер! &e✨");
+            String messageTemplate = plugin.getConfig().getString("FirstJoinMessage", "&a&l%player%&r &7joined the server for the first time! &e✨");
             sendAdminChatMessage(player, messageTemplate, true);
         } else if (!isNewPlayer && plugin.getConfig().getBoolean("EnableJoinMessage", true)) {
-            String messageTemplate = plugin.getConfig().getString("JoinMessage", "&a+ &f%player%&r &7зашёл на сервер.");
+            String messageTemplate = plugin.getConfig().getString("JoinMessage", "&a+ &f%player%&r &7joined the server.");
             sendAdminChatMessage(player, messageTemplate, false);
         }
     }
@@ -78,12 +80,6 @@ public class JoinMessageListener implements Listener {
         BukkitTask task = animationTasks.remove(event.getPlayer().getUniqueId());
         if (task != null) {
             task.cancel();
-        }
-
-        // Служебное сообщение в чат при выходе
-        if (plugin.getConfig().getBoolean("EnableLeaveMessage", true)) {
-            String messageTemplate = plugin.getConfig().getString("LeaveMessage", "&c- &f%player%&r &7вышел с сервера.");
-            sendAdminChatMessage(event.getPlayer(), messageTemplate, false);
         }
     }
 
@@ -111,7 +107,7 @@ public class JoinMessageListener implements Listener {
                     }
                     index++;
                 } catch (Exception e) {
-                    plugin.getLogger().warning("Ошибка синтаксиса MiniMessage в строке: " + rawLine);
+                    plugin.getLogger().warning(languageManager.getMessage("minimessage-error-line", "{line}", rawLine));
                 }
             }
         };
@@ -132,7 +128,7 @@ public class JoinMessageListener implements Listener {
                     player.sendMessage(component);
                 }
             } catch (Exception e) {
-                plugin.getLogger().warning("Ошибка синтаксиса MiniMessage в строке: " + rawLine);
+                plugin.getLogger().warning(languageManager.getMessage("minimessage-error-line", "{line}", rawLine));
             }
         }
     }
@@ -163,7 +159,7 @@ public class JoinMessageListener implements Listener {
                         Placeholder.component("displayname", player.displayName())
                 ));
             } catch (Exception e) {
-                plugin.getLogger().warning("Ошибка MiniMessage в шаблоне: " + template);
+                plugin.getLogger().warning(languageManager.getMessage("minimessage-error-line", "{line}", template));
                 messageComponent = Component.text(processed);
             }
         } else {

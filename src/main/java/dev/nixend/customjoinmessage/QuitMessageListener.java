@@ -16,9 +16,11 @@ public class QuitMessageListener implements Listener {
 
     private final MiniMessage miniMessage = MiniMessage.miniMessage();
     private final CustomJoinMessagePlugin plugin;
+    private final LanguageManager languageManager;
 
-    public QuitMessageListener(CustomJoinMessagePlugin plugin) {
+    public QuitMessageListener(CustomJoinMessagePlugin plugin, LanguageManager languageManager) {
         this.plugin = plugin;
+        this.languageManager = languageManager;
     }
 
     @EventHandler
@@ -56,7 +58,7 @@ public class QuitMessageListener implements Listener {
             );
             event.quitMessage(component);
         } catch (Exception e) {
-            plugin.getLogger().warning("Ошибка синтаксиса MiniMessage в quit-сообщении");
+            plugin.getLogger().warning(languageManager.getMessage("minimessage-error-quit"));
         }
     }
 }
